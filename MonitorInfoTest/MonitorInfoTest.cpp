@@ -1,4 +1,4 @@
-#include "WindowsReg.h"
+#include <WindowsReg.h>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
