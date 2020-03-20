@@ -1,3 +1,5 @@
+#include <MonitorInfoFetcher.h>
+#include <MonitorInfoProvider.h>
 #include <WindowsReg.h>
 #include <iomanip>
 #include <iostream>
@@ -69,6 +71,12 @@ int main()
         cout << "ReadBinaryValue gg" << endl;
     }
 
-    getchar();
+    // Get Monitor Information //
+    MonitorInfoProvider provider(std::make_unique<MonitorInfoFetcher>());
+    auto monitors = provider.GetInformation();
+
+    cout << "Monitor count = " << monitors.size() << endl;
+
+    system("PAUSE");
     return 0;
 }

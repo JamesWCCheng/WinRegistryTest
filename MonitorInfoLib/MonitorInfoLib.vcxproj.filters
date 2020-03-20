@@ -21,6 +21,18 @@
     <ClInclude Include="include\WindowsReg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\MonitorInfoProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MonitorInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IMonitorInfoFetcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MonitorInfoFetcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -30,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\WindowsReg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MonitorInfoFetcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
