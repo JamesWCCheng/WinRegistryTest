@@ -31,7 +31,7 @@ public:
 
     bool ReadInt64Value(const wchar_t* name, uint64_t& result) const;
 
-    bool ReadBinaryValue(const wchar_t* name, std::vector<char>& result) const;
+    bool ReadBinaryValue(const wchar_t* name, std::vector<std::byte>& result) const;
 
 private:
     HKEY m_Key;

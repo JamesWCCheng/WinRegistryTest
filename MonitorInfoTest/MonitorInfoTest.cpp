@@ -6,7 +6,7 @@
 #include <sstream>
 using namespace std;
 
-std::string bin2hex(const char* bin, size_t len)
+std::string bin2hex(const unsigned char* bin, size_t len)
 {
     auto forcelyunsigned = reinterpret_cast<const unsigned char*>(bin);
     std::ostringstream oss;
@@ -60,11 +60,11 @@ int main()
     WindowsReg reg3;
     reg3.Open(HKEY_LOCAL_MACHINE,
               L"SYSTEM\\CurrentControlSet\\Enum\\DISPLAY\\LGD0632\\4&9c63822&0&UID265988\\Device Parameters");
-    std::vector<char> blob;
+    std::vector<std::byte> blob;
     rv = reg3.ReadBinaryValue(L"EDID", blob);
     if (rv)
     {
-        cout << "EDID = " << bin2hex(blob.data(), blob.size()) << endl;
+        cout << "EDID = " << bin2hex(reinterpret_cast<unsigned char*>(blob.data()), blob.size()) << endl;
     }
     else
     {

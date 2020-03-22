@@ -93,7 +93,7 @@ bool WindowsReg::ReadInt64Value(const  wchar_t* name, uint64_t& result) const
     return rv == ERROR_SUCCESS;
 }
 
-bool WindowsReg::ReadBinaryValue(const  wchar_t* name, std::vector<char>& result) const
+bool WindowsReg::ReadBinaryValue(const  wchar_t* name, std::vector<std::byte>& result) const
 {
     if (!m_Key)
     {
@@ -108,7 +108,7 @@ bool WindowsReg::ReadBinaryValue(const  wchar_t* name, std::vector<char>& result
         return false;
     }
 
-    std::vector<char> out;
+    std::vector<std::byte> out;
     out.resize(size);
     rv = RegGetValueW(m_Key, nullptr, name, RRF_RT_REG_BINARY, nullptr, out.data(), &size);
     result = std::move(out);
