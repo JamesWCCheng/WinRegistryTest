@@ -4,7 +4,34 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+
 using namespace std;
+
+ostream& operator<<(ostream& out, const MonitorInfo& info)
+{
+    out << "Is Dell Monitor? " << std::boolalpha << info.IsDellMonitor << endl;
+    if (info.ModelName)
+    {
+        out << "ModelName =  " << *info.ModelName << endl;
+    }
+    if (info.Serial)
+    {
+        out << "Serial = " << *info.Serial << endl;
+    }
+    if (info.ServiceTag)
+    {
+        out << "ServiceTag = " << *info.ServiceTag << endl;
+    }
+    if (info.VendorSpecificData)
+    {
+        out << "VendorSpecificData = " << *info.VendorSpecificData << endl;
+    }
+    if (info.DriverVersion)
+    {
+        out << "DriverVersion = " << *info.DriverVersion << endl;
+    }
+    return out;
+}
 
 std::string bin2hex(const unsigned char* bin, size_t len)
 {
@@ -19,63 +46,16 @@ std::string bin2hex(const unsigned char* bin, size_t len)
 
 int main()
 {
-    WindowsReg reg;
-    reg.Open(HKEY_LOCAL_MACHINE, L"System\\CurrentControlSet\\Services\\monitor\\Enum");
-    uint32_t count = 0;
-    auto rv = reg.ReadIntValue(L"Count", count);
-    if (rv)
-    {
-        cout << "count = " << count << endl;
-    }
-    else
-    {
-        cout << "ReadIntValue gg" << endl;
-    }
-
-    std::wstring str;
-    rv = reg.ReadStringValue(L"0", str);
-    if (rv)
-    {
-        wcout << "str  = " << str << endl;
-    }
-    else
-    {
-        wcout << "ReadStringValue W gg" << endl;
-    }
-
-    std::string strA;
-    rv = reg.ReadStringValue("0", strA);
-    if (rv)
-    {
-        cout << "strA  = " << strA << endl;
-    }
-    else
-    {
-        cout << "ReadStringValue A gg" << endl;
-    }
-
-    //////////////////////////////////////
-    // see HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\monitor\Enum value 0 to replace
-    // DISPLAY\LGD0632\4&9c63822&0&UID265988
-    WindowsReg reg3;
-    reg3.Open(HKEY_LOCAL_MACHINE,
-              L"SYSTEM\\CurrentControlSet\\Enum\\DISPLAY\\LGD0632\\4&9c63822&0&UID265988\\Device Parameters");
-    std::vector<std::byte> blob;
-    rv = reg3.ReadBinaryValue(L"EDID", blob);
-    if (rv)
-    {
-        cout << "EDID = " << bin2hex(reinterpret_cast<unsigned char*>(blob.data()), blob.size()) << endl;
-    }
-    else
-    {
-        cout << "ReadBinaryValue gg" << endl;
-    }
-
-    // Get Monitor Information //
+    // Get Monitor Information
     MonitorInfoProvider provider(std::make_unique<MonitorInfoFetcher>());
     auto monitors = provider.GetInformation();
 
     cout << "Monitor count = " << monitors.size() << endl;
+
+    for (const auto& info : monitors)
+    {
+        cout << info << endl;
+    }
 
     system("PAUSE");
     return 0;
